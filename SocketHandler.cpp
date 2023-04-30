@@ -102,7 +102,15 @@ void SocketHandler::StopProcessing() {
 void SocketHandler::RunIoService() {
 	//boost::asio::io_service::work work(*ioService);
 	ioServiceWork = new boost::asio::io_service::work(*ioService);
-	ioService->run();
+
+	while (true) {
+		try {
+			ioService->run();
+			break;
+		}
+		catch (...)
+		{}
+	}
 }
 
 SocketWrapper* SocketHandler::GetSocketWrapper(const void* socket) {
